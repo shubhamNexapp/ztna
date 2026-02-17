@@ -35,7 +35,7 @@ export default function Dashboard() {
           >
             {collapsed ? '➡️' : '⬅️'}
           </button>
-          <h1 className="text-2xl font-semibold">Dashboard</h1>
+          <h1 className="text-2xl font-semibold">Dashboard Check</h1>
         </div>
 
             <div className="flex items-center gap-3">
