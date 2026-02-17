@@ -6,6 +6,9 @@ import LogBox from '../components/LogBox'
 import { appendConnectionEvent, appendAuditEvent } from '../utils/logService'
 
 export default function Dashboard() {
+
+  console.log('Dashboard rendered==')
+
   const navigate = useNavigate()
   const { collapsed, toggle } = useLayout()
   const toast = useToast()
