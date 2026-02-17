@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Small custom utility for the centered card */
+.body-bg {
+  @apply bg-gray-100 min-h-screen flex items-center justify-center;
+}
+.card {
+  @apply bg-white shadow-md rounded-lg p-8 w-full max-w-md;
+}
+
+/* subtle global tweaks */
+html, body, #root {
+  height: 100%;
+}
+
+.app-container {
+  @apply min-h-screen bg-gradient-to-b from-slate-50 to-white;
+}
+
+/* Theme black: map dark surfaces to the requested color */
+:root{
+  --theme-black: #0D1620;
+  --theme-onblack: #E6EEF7;
+}
+
+/* Global app typography tokens - change here to affect whole project */
+:root{
+  --app-font-size: 15px;
+  --app-text-color: #0f1724; /* sensible dark slate for light mode */
+}
+
+/* Apply the custom dark color to elements that opt-in via .bg-theme-dark or .bg-theme-surface */
+.dark .bg-theme-dark{
+  background-color: var(--theme-black) !important;
+}
+.dark .bg-theme-surface{
+  /* slightly lighter surface for cards */
+  background-color: rgba(13,22,32,0.85) !important;
+}
+.dark .text-theme-on{
+  color: var(--theme-onblack) !important;
+}
+.dark .border-theme-dark{
+  border-color: rgba(255,255,255,0.06) !important;
+}
+
+/* Make page background and default text color use theme in dark mode */
+.dark body {
+  background-color: var(--theme-black);
+  color: var(--theme-onblack);
+}
+
+/* Base typography: set a consistent font-size and color across common text elements.
+   Note: Tailwind utility classes (e.g. text-2xl) will still override these unless removed.
+*/
+@layer base {
+  html, body, #root {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-size: var(--app-font-size);
+    color: var(--app-text-color);
+    line-height: 1.5;
+  }
+
+  /* apply same base size to common text elements so they look consistent */
+  h1,h2,h3,h4,h5,h6,p,li,span,label,a,div,pre,code,blockquote {
+    font-size: inherit;
+    color: inherit;
+  }
+
+  /* keep monospace for code/pre blocks */
+  pre,code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace; }
+}
+
+/* A5 frame styles */
+.a5-viewport {
+  background: transparent;
+  min-height: 100vh;
+}
+.a5-frame {
+  /* give the frame a subtle paper background and border */
+  display: block;
+  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 12px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+  border: 1px solid rgba(2,6,23,0.06);
+  overflow: hidden;
+}
+.a5-surface {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  /* keep page level clean: hide outer scrollbars and let inner components manage their own scrolling */
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Dark-mode variants for the frame */
+.dark .a5-frame {
+  background: var(--theme-black);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.dark .a5-surface {
+  background: transparent;
+}
+
+/* Helpful: when printing, size exactly to A5 */
+@media print {
+  .a5-frame {
+    width: 210mm !important;
+    height: 148mm !important;
+    box-shadow: none;
+    border: none;
+    transform: none !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Button system */
+.btn {
+  @apply inline-flex items-center justify-center rounded-md font-medium transition-shadow transition-colors ease-in-out;
+}
+.btn-primary {
+  @apply px-4 py-2 bg-indigo-600 text-white shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300;
+}
+.btn-danger {
+  @apply px-4 py-2 bg-rose-500 text-white shadow-md hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-rose-300;
+}
+
+/* Specific visual for the Disconnect action - more prominent and consistent across themes */
+.btn-disconnect {
+  @apply px-4 py-2 text-white rounded-md shadow-md font-medium transition-colors;
+  background-color: #EF4444; /* chosen hex for Disconnect */
+}
+.btn-disconnect:hover {
+  background-color: #DC2626;
+}
+
+.dark .btn-disconnect {
+  background-color: #B91C1C;
+}
+.dark .btn-disconnect:hover {
+  background-color: #991B1B;
+}
+.btn-outline {
+  @apply px-4 py-2 bg-white border border-slate-200 text-slate-800 hover:bg-slate-50;
+}
+.btn-ghost {
+  @apply px-3 py-1 bg-transparent text-indigo-600 hover:underline;
+}
+.btn-sm {
+  @apply px-3 py-1 text-sm;
+}
+.btn:active{ @apply transform scale-95 }
+
+/* Dark mode tweaks for buttons */
+.dark .btn-outline {
+  background: transparent;
+  /* Avoid @apply of `text-theme-on` to prevent a circular dependency during PostCSS/Tailwind processing.
+     Use explicit border and color properties that reference our theme variables instead. */
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--theme-onblack);
+}
+.dark .btn-primary {
+  /* slightly muted in dark */
+  background-color: #274060;
+}
+.dark .btn-danger {
+  background-color: #7a2f36;
+}
