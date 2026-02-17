@@ -10,6 +10,8 @@ import About from './pages/About'
 import AppLayout from './components/AppLayout'
 
 export default function App() {
+
+  console.log('App rendered')
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
